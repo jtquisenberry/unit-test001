@@ -1,5 +1,5 @@
 import pytest
-from tests.add import add
+from app.tests.add import add
 
 
 # abc
