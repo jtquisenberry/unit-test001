@@ -1,5 +1,4 @@
-import pytest
-from app.tests.add import add
+from app.arithmetic.add import add
 
 
 # abc
@@ -13,6 +12,7 @@ def add_test():
     expected = 3
     print("XXXXXXXXXXXXXxxxx")
     assert actual == expected
+
 
 def test_add():
     a = 1
