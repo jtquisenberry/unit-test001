@@ -14,19 +14,30 @@ class MinioMock:
         self.method_successful = True
         self.error_type = ''
 
+        self.bucket_list = ['bucket1', 'bucket2', 'bucket3']
+
     def set_success(self, method_successful, error_type=''):
         self.method_successful = method_successful
         self.error_type = error_type
 
+    def bucket_exists(self, bucket_name):
+        return bucket_name in self.bucket_list
+
+    def make_bucket(self, bucket_name):
+        self.bucket_list.append(bucket_name)
 
     def list_buckets(self):
         if self.method_successful:
-            return ['bucket1', 'bucket2', 'bucket3']
+            return self.bucket_list
         else:
             if self.error_type == 's3error':
                 # sock = socket.socket()
                 # response = HTTPResponse(sock=socket.socket())
-                raise S3Error(None, code='0', message="Bucket creation failed",
+                # The S3Error constructor expects an `HTTPResponse` object as its first positional argument.
+                # The HTTPResponse constructor requires a `socket.socket()`. To avoid opening a socket, pass
+                # in `None`.
+                raise S3Error(None,                                                # type: ignore
+                              code='0', message="Bucket creation failed",
                               resource=None, request_id='a', host_id='', bucket_name=None,
                               object_name=None)
             elif self.error_type == 'exception':
