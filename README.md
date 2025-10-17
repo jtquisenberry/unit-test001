@@ -82,18 +82,25 @@ assert expected == actual
 ```
 
 ```python
+return_value = None
 assert return_value is None
 ```
 
 ## Testing Exception Types
 
 ```python
+import pytest
 with pytest.raises(Exception) as excinfo:
+    # Call a function that raises an `Exception` or an object 
+    # that inherits from `Exception`.
     ...
 ```
 
 ```python
+from minio import S3Error
+import pytest
 with pytest.raises(S3Error) as excinfo:
+    # Call a function that raises `minio.S3Error`.
     ...
 ```
 
